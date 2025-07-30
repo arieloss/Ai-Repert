@@ -1,6 +1,21 @@
+# Web & framework
 fastapi
 uvicorn[standard]
+
+# Templates & fichiers statiques
+jinja2
+aiofiles
+python-multipart
+
+# Base de données (SQLAlchemy sync + Postgres)
 sqlalchemy
+psycopg2-binary
+
+# Validation / modèles
+pydantic
+
+# HTTP client
 requests
-gtts
-python-dotenv 
+
+# Synthèse vocale
+gTTS
