@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Repert - Gérer les Charges</title>
+    <link href="/static/css/tailwind.min.css" rel="stylesheet">
+    <link href="/static/css/custom.css" rel="stylesheet">
+    <script src="/static/js/main.js" defer></script>
+</head>
+<body class="bg-gray-100 font-sans">
+    <div class="container mx-auto p-4">
+        <h1 class="text-3xl font-bold mb-6">Gérer les Charges</h1>
+        
+        <div class="mb-6">
+            <a href="/" class="text-blue-600 hover:underline">Retour au Dashboard</a>
+        </div>
+        
+        <!-- Charges List -->
+        <div class="bg-white rounded-lg shadow-md overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200 table-hover">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nom</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Puissance (W)</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">État</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    {% for charge in charges %}
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ charge.id }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <form class="update-charge-name" data-charge-id="{{ charge.id }}">
+                                <input type="text" name="nom" value="{{ charge.nom }}" class="border rounded px-2 py-1 form-input">
+                                <button type="submit" class="ml-2 text-blue-600 hover:underline btn">Modifier</button>
+                            </form>
+                            <div class="alert-success"></div>
+                            <div class="alert-error"></div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ charge.type }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ charge.puissance_nominale }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap state-span">
+                            {% if charge.etat %}
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">ON</span>
+                            {% else %}
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">OFF</span>
+                            {% endif %}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <a href="/api/charges/{{ charge.id }}/etat?etat={% if charge.etat %}false{% else %}true{% endif %}" 
+                               class="text-blue-600 hover:underline toggle-state btn" 
+                               data-charge-id="{{ charge.id }}">
+                                {% if charge.etat %}Éteindre{% else %}Allumer{% endif %}
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

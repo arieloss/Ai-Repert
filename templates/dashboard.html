@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Repert - Dashboard</title>
+    <link href="/static/css/tailwind.min.css" rel="stylesheet">
+    <link href="/static/css/custom.css" rel="stylesheet">
+    <script src="/static/js/main.js" defer></script>
+</head>
+<body class="bg-gray-100 font-sans">
+    <div class="container mx-auto p-4">
+        <h1 class="text-3xl font-bold mb-6">AI Repert Dashboard</h1>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <!-- Production Card -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold mb-4">Production Actuelle</h2>
+                <p class="text-2xl">{{ production_actuelle }} W</p>
+            </div>
+            
+            <!-- Battery SOC Card -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold mb-4">État de la Batterie</h2>
+                <p class="text-2xl">{{ soc_batterie }} %</p>
+            </div>
+            
+            <!-- Navigation Card -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold mb-4">Navigation</h2>
+                <a href="/charges" class="text-blue-600 hover:underline btn">Gérer les charges</a>
+            </div>
+        </div>
+        
+        <!-- Charges List -->
+        <div class="mt-8">
+            <h2 class="text-2xl font-semibold mb-4">Charges Actuelles</h2>
+            <div class="bg-white rounded-lg shadow-md overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200 table-hover">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nom</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">État</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        {% for charge in charges %}
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ charge.id }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ charge.nom }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ charge.type }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                {% if charge.etat %}
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">ON</span>
+                                {% else %}
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">OFF</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

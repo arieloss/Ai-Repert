@@ -1,0 +1,5 @@
+/* You'll need to download Tailwind CSS or include it via CDN in production */
+/* For development, you can include it in the template or download it */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
